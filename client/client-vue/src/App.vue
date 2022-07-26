@@ -2,7 +2,7 @@
  * @Author: jimouspeng
  * @Date: 2022-07-22 11:26:44
  * @Description: 
- * @FilePath: \upload_service\client\client-vue\src\App.vue
+ * @FilePath: \node_service\client\client-vue\src\App.vue
 -->
 <template>
     <!-- <div> -->

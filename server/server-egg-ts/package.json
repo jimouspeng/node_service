@@ -1,5 +1,5 @@
 {
-  "name": "server-egg",
+  "name": "server-egg-ts",
   "version": "1.0.0",
   "description": "egg-上传服务",
   "private": true,
@@ -8,8 +8,8 @@
     "declarations": true
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-server-egg",
-    "stop": "egg-scripts stop --title=egg-server-server-egg",
+    "start": "egg-scripts start --daemon --title=node-server-egg",
+    "stop": "egg-scripts stop --title=node-server-egg",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
+    "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0"
   },
   "devDependencies": {
@@ -49,7 +50,9 @@
     "type": "git",
     "url": ""
   },
-  "eslintIgnore": ["coverage"],
+  "eslintIgnore": [
+    "coverage"
+  ],
   "author": "jimouspeng",
   "license": "MIT"
 }
