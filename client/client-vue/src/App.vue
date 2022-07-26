@@ -5,11 +5,11 @@
  * @FilePath: \upload_service\client\client-vue\src\App.vue
 -->
 <template>
-    <div id="app">
-        <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-        <router-view />
-        <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    </div>
+    <!-- <div> -->
+    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+    <router-view />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+    <!-- </div> -->
 </template>
 
 <script>
