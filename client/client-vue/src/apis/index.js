@@ -1,2 +1,2 @@
-export * from './login.js'
-export * from './upload.js'
+export * from './login.js';
+export * from './upload.js';

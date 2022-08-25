@@ -10,9 +10,9 @@ module.exports = {
     },
     rules: {
         indent: ['error', 4],
-        semi: 'off',
+        'semi':['error','always'],
         'max-len': [2, 240],
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     },
-}
+};

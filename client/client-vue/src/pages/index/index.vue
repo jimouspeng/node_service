@@ -8,13 +8,28 @@
     <div class="page-wrap">
         <div class="upload-module">
             <div class="upload-list">
+                <!-- 表单FormData上传文件 -->
                 <div class="upload-item">
                     <div class="upload-title">表单input上传</div>
                     <div class="upload-input">
                         <!-- multiple属性支持多选, max属性好像无效 -->
                         <input type="file" accept="*" @change="fileChange" multiple="multiple" max="2" />
                     </div>
+                    <div class="btn-upload flex-box" @click.stop="uploadFile">上传</div>
                 </div>
+                <!-- iframe上传文件 -->
+                <div class="upload-item">
+                    <div class="upload-title">iframe上传</div>
+                    <!-- form表单的target必须指向iframe的name -->
+                    <form class="form-module" action="http://127.0.0.1:7001/iframe_upload?callback=http://localhost:8080&params=callback" method="post" enctype="multipart/form-data" target="iframe_uplaod">
+                        <div class="upload-input">
+                            <!-- input必须要有name属性 -->
+                            <input name="img" type="file" accept="*" multiple="multiple" max="2" @change="fileChange" />
+                        </div>
+                        <input type="submit" value="上传" />
+                    </form>
+                </div>
+                <iframe name="iframe_uplaod" style="display: none"></iframe>
             </div>
             <img-show :img-list="imgList" />
         </div>
@@ -23,8 +38,8 @@
     </div>
 </template>
 <script>
-import { loginHttp, IndexHttp, uploadFormHttp } from '@/apis/index.js'
-import ImgShow from '@/components/img-show/index.vue'
+import { loginHttp, IndexHttp, uploadFormHttp } from '@/apis/index.js';
+import ImgShow from '@/components/img-show/index.vue';
 export default {
     name: 'index-page',
     components: {
@@ -33,67 +48,101 @@ export default {
     data() {
         return {
             imgList: [],
-        }
+            formCtx: null,
+        };
     },
     created() {
         loginHttp().then((res) => {
-            console.log(res, '登陆-----------')
-        })
+            console.log(res, '登陆-----------');
+        });
         IndexHttp().then((res) => {
-            console.log(res, '\n---from index.vue')
-        })
+            console.log(res, '\n---from index.vue');
+        });
+        window.jsoncallback = function (data) {
+            var code = data.result_code;
+            if (code == 1) {
+                window.location.href = data.url ? data.url : window.location.href;
+            } else {
+                alert(data.result_msg);
+            }
+        };
     },
     methods: {
         fileChange(e) {
-            const fileList = Array.from(e.target.files)
-            const formCtx = new FormData()
+            const fileList = Array.from(e.target.files);
+            const formCtx = new FormData();
             fileList.forEach((item, index) => {
-                const imgUrl = URL.createObjectURL(item)
-                this.imgList.push(imgUrl)
-                console.log(index, '09000')
-                formCtx.append(`upload_${index}`, e.target.files[index])
-            })
-
-            console.log(formCtx, 'form-----------')
-
-            this.uploadWithFormdata(formCtx)
+                const imgUrl = URL.createObjectURL(item);
+                this.imgList.push(imgUrl);
+                console.log(index, '09000');
+                formCtx.append(`upload_${index}`, e.target.files[index]);
+            });
+            this.formCtx = formCtx;
+            console.log(this.formCtx, 'form-----------');
         },
         /** 表单方式上传 */
-        uploadWithFormdata(file) {
-            uploadFormHttp(file).then((res) => {
-                console.log(res)
-            })
+        uploadFile() {
+            uploadFormHttp(this.formCtx).then((res) => {
+                console.log(res);
+            });
         },
         resetData() {
-            this.imgList = []
+            this.imgList = [];
         },
         goPreview() {
-            this.$router.push('img-list')
+            // this.$router.push('img-list')
+            this.$router.push('callback');
         },
     },
-}
+};
 </script>
 <style lang="scss" scoped>
 @import '@/styles/common.scss';
+.flex-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .page-wrap {
     font-size: 16px;
     padding-top: 36px;
     .upload-module {
         display: flex;
         margin-left: 48px;
-        .upload-item {
-            background: #ccc;
-            width: 360px;
-            padding: 24px;
-            box-sizing: border-box;
-            .upload-title {
-                text-align: left;
-                font-weight: 700;
-            }
-            .upload-input {
-                display: flex;
-                justify-content: flex-start;
-                margin-top: 12px;
+        .upload-list {
+            .upload-item {
+                background: #ccc;
+                width: 360px;
+                padding: 24px;
+                box-sizing: border-box;
+                .btn-upload {
+                    background-color: #fff;
+                    width: 120px;
+                    height: 28px;
+                    margin-top: 12px;
+                }
+                .upload-title {
+                    text-align: left;
+                    font-weight: 700;
+                }
+                .upload-input {
+                    display: flex;
+                    justify-content: flex-start;
+                    margin-top: 12px;
+                }
+                &:nth-child(n + 2) {
+                    margin-top: 12px;
+                }
+                .form-module {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    input {
+                        margin-top: 12px;
+                        width: 120px;
+                        height: 30px;
+                    }
+                }
             }
         }
     }

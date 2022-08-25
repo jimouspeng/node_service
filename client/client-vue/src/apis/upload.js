@@ -1,9 +1,9 @@
-import Http from '@/utils/http.js'
+import Http from '@/utils/http.js';
 
 export const IndexHttp = (params) => {
-    return Http.get('/', params)
-}
+    return Http.get('/', params);
+};
 
 export const uploadFormHttp = (params) => {
-    return Http.post('/upload_img', params)
-}
+    return Http.post('/upload_img', params);
+};

@@ -2,7 +2,7 @@
  * @Date: 2022-07-27 16:15:30
  * @LastEditors: Please set LastEditors
  * @Description: 描述文件内容
- * @LastEditTime: 2022-08-01 14:43:49
+ * @LastEditTime: 2022-08-25 17:53:23
  * @FilePath: \node_service\server\server-egg-ts\config\config.default.ts
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg'
@@ -37,7 +37,7 @@ export default (appInfo: EggAppInfo) => {
      * https://www.eggjs.org/zh-CN/basics/controller#%E8%8E%B7%E5%8F%96%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6
      */
     config.multipart = {
-        mode: 'file',
+        // mode: 'file', // 启用file模式 https://eggjs.github.io/zh/guide/upload.html
         fileExtensions: ['.csv', '.doc'],
     }
 

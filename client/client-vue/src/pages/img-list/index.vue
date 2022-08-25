@@ -9,9 +9,9 @@ export default {
     name: 'picture-list',
     methods: {
         goUpload() {
-            this.$router.push('index')
+            this.$router.push('index');
         },
     },
-}
+};
 </script>
 <style lang="scss" scoped></style>
