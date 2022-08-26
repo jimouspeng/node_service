@@ -29,12 +29,17 @@
                         <input type="submit" value="上传" />
                     </form>
                 </div>
-                <iframe name="iframe_uplaod" style="display: none"></iframe>
+                <!-- 拖放上传文件 -->
+                <div class="upload-item">
+                    <div class="drop-area flex-box" @dragover="fileDragover" @drop="fileDrop">将文件拖拽到这里</div>
+                    <div class="btn-upload flex-box" @click.stop="uploadFile">上传</div>
+                </div>
             </div>
             <img-show :img-list="imgList" />
         </div>
         <div class="reset-btn" @click.stop="resetData">重置</div>
         <div class="router-item" @click.stop="goPreview">前往浏览</div>
+        <iframe name="iframe_uplaod" style="display: none"></iframe>
     </div>
 </template>
 <script>
@@ -93,6 +98,24 @@ export default {
             // this.$router.push('img-list')
             this.$router.push('callback');
         },
+        // 拖拽上传, chrome下必须阻止dragenter和dragover的默认行为，才能触发drop事件
+        fileDragover(e) {
+            e.preventDefault();
+        },
+        fileDrop(e) {
+            e.preventDefault();
+            const fileCtx = e.dataTransfer;
+            const formCtx = new FormData();
+            console.log(fileCtx.files);
+            for (let i = 0; i < fileCtx.files.length; i++) {
+                const imgUrl = URL.createObjectURL(fileCtx.files[i]);
+                this.imgList.push(imgUrl);
+                console.log(i, '09000');
+                formCtx.append(`upload_${i}`, fileCtx.files[i]);
+            }
+            this.formCtx = formCtx;
+            console.log(this.formCtx, 'form-----------');
+        },
     },
 };
 </script>
@@ -142,6 +165,12 @@ export default {
                         width: 120px;
                         height: 30px;
                     }
+                }
+                .drop-area {
+                    width: 240px;
+                    height: 90px;
+                    background-color: greenyellow;
+                    color: gray;
                 }
             }
         }
