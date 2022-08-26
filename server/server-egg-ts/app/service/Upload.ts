@@ -7,6 +7,7 @@
 import { Service } from 'egg';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Stream } from 'stream';
 
 const keepPath = path.resolve(__dirname, '../../resource')
 
@@ -38,5 +39,19 @@ export default class Upload extends Service {
             })
         })
 
+    }
+    public keepLocalImgStream(stream: Stream, fileName: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const file = fs.createWriteStream(path.resolve(keepPath, `./${fileName}`));
+            stream.pipe(file);
+            file.on('finish', () => {
+                console.log('数据写入完成');
+                resolve(true);
+            })
+
+            file.on('error', () => {
+                reject(false)
+            })
+        })
     }
 }

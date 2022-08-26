@@ -2,7 +2,7 @@
  * @Date: 2022-07-27 16:15:30
  * @LastEditors: Please set LastEditors
  * @Description: 描述文件内容
- * @LastEditTime: 2022-08-25 17:53:23
+ * @LastEditTime: 2022-08-26 11:22:36
  * @FilePath: \node_service\server\server-egg-ts\config\config.default.ts
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg'
@@ -39,6 +39,16 @@ export default (appInfo: EggAppInfo) => {
     config.multipart = {
         // mode: 'file', // 启用file模式 https://eggjs.github.io/zh/guide/upload.html
         fileExtensions: ['.csv', '.doc'],
+        // 表单 Field 文件名长度限制
+        fieldNameSize: 100,
+        // 表单 Field 内容大小
+        fieldSize: '100000kb',
+        // 表单 Field 最大个数
+        fields: 10,
+        // 单个文件大小
+        fileSize: '10mb',
+        // 允许上传的最大文件数
+        files: 10,
     }
 
     /** 配置CSRF
