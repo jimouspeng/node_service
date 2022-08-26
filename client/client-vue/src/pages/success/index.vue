@@ -11,10 +11,10 @@
 export default {
     name: 'success-callback',
     mounted() {
-        this.$nextTick(() => {
-            console.log(window.location.href, 'hhhhh');
-            alert('上传成功');
-        });
+        // this.$nextTick(() => {
+        //     console.log(window.location.href, 'hhhhh');
+        //     alert('上传成功');
+        // });
     },
 };
 </script>

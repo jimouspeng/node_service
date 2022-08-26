@@ -2,7 +2,7 @@
  * @Author: jimouspeng
  * @Date: 2022-07-22 16:43:40
  * @Description: 上传图片页
- * @FilePath: \node_service\client\client-vue\src\pages\index\index.vue
+ * @FilePath: \client-vue\src\pages\index\index.vue
 -->
 <template>
     <div class="page-wrap">
@@ -39,11 +39,12 @@
         </div>
         <div class="reset-btn" @click.stop="resetData">重置</div>
         <div class="router-item" @click.stop="goPreview">前往浏览</div>
+        <div class="poster-btn flex-box" @click.stop="generatePoster">生成海报</div>
         <iframe name="iframe_uplaod" style="display: none"></iframe>
     </div>
 </template>
 <script>
-import { loginHttp, IndexHttp, uploadFormHttp } from '@/apis/index.js';
+import { loginHttp, IndexHttp, uploadFormHttp, getPosterHttp } from '@/apis/index.js';
 import ImgShow from '@/components/img-show/index.vue';
 export default {
     name: 'index-page',
@@ -116,6 +117,16 @@ export default {
             this.formCtx = formCtx;
             console.log(this.formCtx, 'form-----------');
         },
+        /** 生成海报 */
+        generatePoster() {
+            getPosterHttp()
+                .then((res) => {
+                    console.log(res, '----------');
+                })
+                .catch((err) => {
+                    console.error(err, 'error?');
+                });
+        },
     },
 };
 </script>
@@ -183,6 +194,15 @@ export default {
     }
     .router-item {
         margin-left: 48px;
+    }
+    .poster-btn {
+        margin-left: 48px;
+        margin-top: 12px;
+        width: 120px;
+        height: 40px;
+        color: #666;
+        background: #fff;
+        border: 1px solid #ccc;
     }
 }
 </style>
